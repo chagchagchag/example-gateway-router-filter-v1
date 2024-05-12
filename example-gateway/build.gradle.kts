@@ -26,6 +26,7 @@ extra["springCloudVersion"] = "2023.0.1"
 dependencies {
   implementation("org.springframework.cloud:spring-cloud-starter-gateway")
   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
   compileOnly("org.projectlombok:lombok")
   annotationProcessor("org.projectlombok:lombok")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
