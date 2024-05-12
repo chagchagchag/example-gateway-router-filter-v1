@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: example-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: example-member-api
+          uri: http://localhost:8090
+          predicates:
+            - Path=/member-api/**
+        - id: example-display-api
+          uri: http://localhost:8091
+          predicates:
+            - Path=/example-display-api/**
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
