@@ -24,6 +24,7 @@ repositories {
 extra["springCloudVersion"] = "2023.0.1"
 
 dependencies {
+  implementation("org.springframework.boot:spring-boot-starter-webflux")
   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
   compileOnly("org.projectlombok:lombok")
