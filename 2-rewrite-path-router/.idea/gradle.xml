@@ -11,8 +11,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/example-gateway" />
-            <option value="$PROJECT_DIR$/example-member-svc" />
+            <option value="$PROJECT_DIR$/gateway-service" />
+            <option value="$PROJECT_DIR$/member-service" />
           </set>
         </option>
       </GradleProjectSettings>
