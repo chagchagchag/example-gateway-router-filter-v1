@@ -12,5 +12,7 @@ spring:
           uri: http://localhost:8090
           predicates:
             - Path=/member-service/**
+          filters:
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
 server:
   port: 8080
