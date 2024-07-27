@@ -11,6 +11,10 @@
         <module name="with-jwt-authentication.member-service.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="with-jwt-authentication.core.jwt-wrapper" target="21" />
+      <module name="with-jwt-authentication.core.jwt-wrapper.main" target="21" />
+      <module name="with-jwt-authentication.core.jwt-wrapper.test" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
