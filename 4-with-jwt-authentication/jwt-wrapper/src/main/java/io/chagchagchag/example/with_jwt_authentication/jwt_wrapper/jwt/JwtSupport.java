@@ -40,4 +40,13 @@ public class JwtSupport {
   public Boolean checkIfExpired(Date expiration){
     return expiration.after(new Date());
   }
+
+  public String bearerTokenString(String jwt){
+    return String.format("Bearer %s", jwt);
+  }
+
+  public Boolean checkContainsBearer(String header){
+    int len = "Bearer ".length();
+    return header.substring(0, len).equalsIgnoreCase("Bearer");
+  }
 }
