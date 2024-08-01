@@ -1,0 +1,6 @@
+spring:
+  r2dbc:
+    url: r2dbc:mysql://localhost:23306/security_r2dbc_gateway?useUnicode=true&serverTimezone=UTC
+    username: root
+    password: test1357
+    schema: security_r2dbc_gateway

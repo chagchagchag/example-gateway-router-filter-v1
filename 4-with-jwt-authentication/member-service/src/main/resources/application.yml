@@ -5,6 +5,7 @@ spring:
     import:
       - classpath:eureka-client-disabled.yml
       - classpath:springdoc-enabled.yml
+      - classpath:r2dbc.yml
 data:
   springdoc-name: member-service
 server:

@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
@@ -48,5 +50,9 @@ public class JwtSupport {
   public Boolean checkContainsBearer(String header){
     int len = "Bearer ".length();
     return header.substring(0, len).equalsIgnoreCase("Bearer");
+  }
+
+  public Key hmacShaKeyFor(String secret){
+    return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
   }
 }
