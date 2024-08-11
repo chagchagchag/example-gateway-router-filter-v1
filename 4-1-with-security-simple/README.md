@@ -2,18 +2,17 @@
 
 Spring Webflux Gateway 내에서 JWT 인증을 모두 수행하는 경우의 예제를 정리하는 프로젝트입니다. MSA 기반이 아닌 싱글인스턴스 기반으로 계정 서비스를 운영할 경우에 대한 예제이며, 가급적이면 Webflux Gateway, Security, JWT 의 필수 요소 들 중 필요한 부분만 한눈에 볼 수 있도록 하기 위해 복잡한 R2DBC 설정, 테이블 설계 내용들은 모두 배제했습니다.<br/>
 
-고도화나 리팩토링 없이 어느 정도는 하드코딩으로 원리와 개념만 보이도록 아주 원시적인 코드로 작성중입니다.<br/>
+고도화나 리팩토링 없이 어느 정도는 하드코딩으로 원리와 개념만 보이도록 원시적인 코드입니다.<br/>
+
+코드는 조만간 커밋 예정입니다.<br/>
+
+## Security 
+
+전체 구조도는 아래와 같습니다.
+
+![](./docs/img/1.png)
 
 
-
-**사용자 계정**<br/>
-
-이번 프로젝트에서는 아래의 사용자들을 Map 으로 입력해둔후 맞는지 판단하는 인증을 거칩니다. 
-
-- id : `user_a`, password : `AAAAA`
-- id : `user_b`, password : `BBBBB`
-
-이 내용은 SecurityConfig 내에 정의한 UserDetailsService Bean 을 정의하는 메서드를 확인해보시면 됩니다.<br/>
 
 <br/>
 
@@ -21,18 +20,35 @@ Spring Webflux Gateway 내에서 JWT 인증을 모두 수행하는 경우의 예
 
 ## SecurityConfig, UserDetailsService, PasswordEncoder
 
-편의상 아래의 요소들은 별도의 컴포넌트에 따로 구현하지 않고 SecurityConfig 설정 파일에 Bean 으로 등록합니다.
+편의상 아래의 요소들은 별도의 컴포넌트에 따로 구현하지 않고 SecurityConfig 설정 파일에 Bean 으로 등록합니다.<br/>
 
-UserDetailsService
+**UserDetailsService**<br/>
 
-- id : `user_a`, password : `AAAAA`
-- id : `user_b`, password : `BBBBB`
+이번 프로젝트에서는 아래의 사용자들을 Map 으로 입력해둔후 맞는지 판단하는 인증을 거칩니다. 
+
+- id : `aaa@gmail.com` , password: `aaaaa` 
+- id : `bbb@gmail.com` , password: `bbbbb`
+- id : `vvv@gmail.com` , password: `vvvvv`
+
+이 내용은 SecurityConfig 내에 정의한 UserDetailsService Bean 을 정의하는 메서드를 확인해보시면 됩니다.<br/>
+
+username 을 email 로 해서 조회하도록 지정했습니다. 만약 email 을 바꿀 수 있는 계정 시스템을 구현한다면, 별도의 unique key 를 컬럼으로 두거나, 별도의 id키를 가지는 테이블을 하나 더 두어서 member 테이블이 이 테이블을 참조하도록 지정하는 것도 하나의 선택이 될 수 있습니다. 이번 구현에서는 이런 세부적으로 투머치한 내용까지는 다루지는 않습니다.<br/>
 
 <br/>
 
-PasswordEncoder
+**PasswordEncoder**<br/>
+
+PasswordEncoder 는 `BcryptEncoder` 를 사용합니다.
 
 - BcryptEncoder
+
+<br/>
+
+
+
+위의 요소들은 모두 약식으로 SecurityConfig 내에서 Bean 으로 선언합니다.
+
+
 
 <br/>
 
@@ -60,7 +76,7 @@ JwtAuthenticationManager 의 authenticate(Authentication) 메서드는 Authentic
 
 
 
-
+## Gateway
 
 구현 중이에요!!! 빨리 만들어볼께요 흑흑...
 
