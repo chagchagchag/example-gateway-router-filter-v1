@@ -78,7 +78,13 @@ JwtAuthenticationManager 의 authenticate(Authentication) 메서드는 Authentic
 
 ## Gateway
 
-구현 중이에요!!! 빨리 만들어볼께요 흑흑...
+현재 ip key 를 기반으로 하는 RateLimiter 를 달아두었습니다. 문서화는 시간이 나는대로 꾸준히 추가하겠습니다. <br/>
+
+Gateway 내에는 MemberController가 존재하고 있으며, 스프링 시큐리티를 이용해서 Gateway 서버가 인증을 직접 담당하고 있습니다. MSA로 전환할 경우에는 member-service에 이 작업을 넘겨주고 JWT 체크를 통한 인증을 수행하게끔 하면 됩니다. 각각의 msa 가 member-service 를 FeignClient, WebClient 등을 이용해서 통신을 수행하면 됩니다.<br/>
+
+Gateway 의 경우 EKS 내로 전환할 수도 있습니다. Spring Cloud for Kubernetes 에서 인프라레벨이 아닌 소프트웨어레벨에서 Spring Cloud 의 각 스택들을 개발할 수 있도록 지원하는 기능이 있습니다. 하지만 가급적이면 개발 또는 운영 초기에는 싱글인스턴스 또는 ELB,ALB 를 통한 다중화를 기반으로 해도 좋을수 있을 것 같습니다. Spring Cloud Config 서버, Eureka Server, Eureka Discovery 를 조합한다면 더 좋을수 있겠지만 이 셋 중에 하나를 꼭 선택하라면 Config 서버를 하나 잘 갖출것 같습니다. Config 서버를 잘 갖춰놓으면 필터에 관련된 yml 을 수정해서 푸시하는 것만으로 재배포 없이 그대로 Gateway 를 계속 띄워두면서 게이트웨이의 라우팅등과 관련된 변경사항을 반영하는 것이 가능해집니다.<br/>
+
+조금 더 복잡한 시스템의 Gateway 라면 가급적이면 Gateway 에서 상태가 있는 연산은 피하는게 좋을 것 같다고 생각합니다. 그냥 개인적인 견해\~\~\~\~\~\~
 
 
 
