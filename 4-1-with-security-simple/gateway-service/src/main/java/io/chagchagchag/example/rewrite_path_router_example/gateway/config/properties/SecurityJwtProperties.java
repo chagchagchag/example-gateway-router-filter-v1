@@ -2,11 +2,14 @@ package io.chagchagchag.example.rewrite_path_router_example.gateway.config.prope
 
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 @Getter
-@Component
 @ConfigurationProperties(prefix = "security.jwt")
 public class SecurityJwtProperties {
-  private String key;
+  private final String key;
+  @ConstructorBinding
+  public SecurityJwtProperties(String key){
+    this.key = key;
+  }
 }

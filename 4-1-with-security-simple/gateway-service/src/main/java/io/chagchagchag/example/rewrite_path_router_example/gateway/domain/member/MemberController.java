@@ -46,7 +46,7 @@ public class MemberController {
   @Getter
   @Builder
   @AllArgsConstructor
-  class AuthRequest{
+  static class AuthRequest{
     String email;
     String password;
   }

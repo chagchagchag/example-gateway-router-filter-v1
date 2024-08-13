@@ -1,5 +1,7 @@
 package io.chagchagchag.example.rewrite_path_router_example.gateway.config.security;
 
+import io.chagchagchag.example.rewrite_path_router_example.gateway.config.properties.SecurityJwtProperties;
+import io.chagchagchag.example.rewrite_path_router_example.gateway.support.jwt.JwtSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.MapReactiveUserDetailsServi
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -20,22 +23,25 @@ import org.springframework.security.web.server.context.ServerSecurityContextRepo
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
 public class ReactiveSecurityConfig {
-  private final ReactiveAuthenticationManager authenticationManager;
-  private final ServerSecurityContextRepository securityContextRepository;
-
-
   @Bean
   public SecurityWebFilterChain securityWebFilterChain(
-      ServerHttpSecurity http
+      ServerHttpSecurity http,
+      ReactiveUserDetailsService userDetailsService,
+      PasswordEncoder passwordEncoder,
+      JwtSupport jwtSupport,
+      SecurityJwtProperties securityJwtProperties
   ){
+    ReactiveAuthenticationManager authenticationManager = new JwtWebfluxAuthenticationManager(userDetailsService, passwordEncoder);
+    ServerSecurityContextRepository securityContextRepository = new JwtSecurityContextRepository(jwtSupport, userDetailsService, securityJwtProperties);
+
     return http
         .csrf(ServerHttpSecurity.CsrfSpec::disable)
         .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
         .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
         .authorizeExchange(exchange ->
           exchange
-              .pathMatchers("**/admin/**").hasAuthority("ROLE_ADMIN")
-              .pathMatchers("/login").permitAll()
+              .pathMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+              .pathMatchers("/member/login").permitAll()
               .pathMatchers("/actuator/**").permitAll()
               .anyExchange().authenticated()
         )

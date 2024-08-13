@@ -4,7 +4,6 @@ import io.chagchagchag.example.rewrite_path_router_example.gateway.config.proper
 import io.chagchagchag.example.rewrite_path_router_example.gateway.support.jwt.JwtDetails;
 import io.chagchagchag.example.rewrite_path_router_example.gateway.support.jwt.JwtSupport;
 import java.security.Key;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,13 +15,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-@RequiredArgsConstructor
 @Component
 @Slf4j
 public class JwtSecurityContextRepository implements ServerSecurityContextRepository {
   private final JwtSupport jwtSupport;
   private final ReactiveUserDetailsService userDetailsService;
   private final SecurityJwtProperties properties;
+
+  public JwtSecurityContextRepository(
+      JwtSupport jwtSupport,
+      ReactiveUserDetailsService userDetailsService,
+      SecurityJwtProperties properties
+  ){
+      this.jwtSupport = jwtSupport;
+      this.userDetailsService = userDetailsService;
+      this.properties = properties;
+  }
 
   @Override
   public Mono<Void> save(ServerWebExchange exchange, SecurityContext context) {

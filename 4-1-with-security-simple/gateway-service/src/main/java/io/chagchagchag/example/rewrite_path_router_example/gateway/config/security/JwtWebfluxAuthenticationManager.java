@@ -1,6 +1,5 @@
 package io.chagchagchag.example.rewrite_path_router_example.gateway.config.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,10 +10,17 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 public class JwtWebfluxAuthenticationManager implements ReactiveAuthenticationManager {
   private final ReactiveUserDetailsService userDetailsService;
   private final PasswordEncoder passwordEncoder;
+
+  public JwtWebfluxAuthenticationManager(
+      ReactiveUserDetailsService userDetailsService, PasswordEncoder passwordEncoder
+  ){
+    this.userDetailsService = userDetailsService;
+    this.passwordEncoder = passwordEncoder;
+  }
+
   @Override
   public Mono<Authentication> authenticate(Authentication authentication) {
     return Mono.just(authentication)
